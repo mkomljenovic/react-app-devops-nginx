@@ -18,9 +18,6 @@ FROM nginx
 # set the conf to workdir
 WORKDIR /usr/share/nginx/html
 
-# remove default static assets
-RUN rm -rf ./*
-
 # copy static assets from builder stage
 COPY --from=builder /app/build .
 

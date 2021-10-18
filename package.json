@@ -17,7 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docker-image": "docker build -t react-app-devops-nginx .",
-    "docker-run": "docker run --rm -it -p 9090:90 react-app-devops-nginx",
+    "docker-run": "docker run --rm -it -p 80:80 react-app-devops-nginx",
     "dev": "npm run docker-image && npm run docker-run"
   },
   "eslintConfig": {
