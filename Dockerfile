@@ -1,21 +1,28 @@
 # get image
-FROM node:latest
+FROM node:latest as builder
 
 # create work directory 
 WORKDIR /app 
 
-# dependencies 
-
-COPY package*.json .
-RUN npm i
-
 # copy all files
 COPY . .
 
+# install node modules and build assets
+RUN npm i && npm run build
+
 EXPOSE 3000
 
+# nginx state for serving content
+FROM nginx
 
+# set the conf to workdir
+WORKDIR /usr/share/nginx/html
 
+# remove default static assets
+RUN rm -rf ./*
 
+# copy static assets from builder stage
+COPY --from=builder /app/build .
 
-
+# containers run nginx
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
